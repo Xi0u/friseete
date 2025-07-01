@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8">
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      text-align: center;
+      background-color: #f4f4f4;
+      margin: 0;
+      padding: 20px;
+    }
+    img {
+      max-width: 100%;
+      height: auto;
+    }
+  </style>
+</head>
+<body>
+
+  <img src="Frise_chrono.jpg" alt="Frise chronologique" usemap="#frise" id="friseImg">
+
+  <map name="frise">
+    <!-- Les zones seront ajoutées dynamiquement -->
+  </map>
+
+  <script>
+    const originalWidth = 1000; // largeur de l’image d'origine
+  const mapAreas = [
+  {coords: [70, 300, 180, 400], href: "tag.html"},
+  {coords: [200, 300, 340, 400], href: "breakdance.html"},
+  {coords: [370, 300, 510, 400], href: "streetwear.html"},
+  {coords: [540, 300, 660, 400], href: "gangsta.html"},
+  {coords: [690, 300, 810, 400], href: "hyphy.html"},
+  {coords: [840, 300, 980, 400], href: "drill.html"}
+];
+
+
+
+
+    function resizeMap() {
+      const img = document.getElementById("friseImg");
+      const currentWidth = img.clientWidth;
+      const ratio = currentWidth / originalWidth;
+
+      const map = document.querySelector("map[name='frise']");
+      map.innerHTML = "";
+
+      mapAreas.forEach(area => {
+        const scaledCoords = area.coords.map(coord => Math.round(coord * ratio)).join(",");
+        const el = document.createElement("area");
+        el.shape = "rect";
+        el.coords = scaledCoords;
+        el.href = area.href;
+        el.alt = area.href.replace(".html", "");
+        map.appendChild(el);
+      });
+    }
+
+    window.addEventListener("load", resizeMap);
+    window.addEventListener("resize", resizeMap);
+  </script>
+</body>
+</html>
